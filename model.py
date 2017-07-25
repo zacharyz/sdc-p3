@@ -18,8 +18,8 @@ from keras.layers.advanced_activations import ELU
 from keras.optimizers import Adam
 
 LEARNING_RATE = .0001
-EPOCHS = 12 # 6-8 seem to be a sweet spot 
-BATCH_SIZE = 256
+EPOCHS = 5 # 5 seem to be a sweet spot 
+BATCH_SIZE = 32
 MODEL_FILE = 'model.h5'
 STEERING_CORRECTION = 0.28
 SAMPLE_DATA = './sampledata/' #sample data provided by udacity
@@ -83,9 +83,9 @@ def get_model():
 
     model.add(Flatten())
     model.add(Dense(100))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.5))
     model.add(Dense(50))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.5))
     model.add(Dense(10))
     model.add(Dense(1))
 
@@ -111,10 +111,6 @@ def main():
             angle = float(line[3])
             flip = False
             
-            # flip the set the images
-            #if np.random.uniform() > 0.5:
-            #    flip = True
-                
             samples.append(DrivingData(name, angle, flip, directory))
             
             # also store left and right images with corrected steering angles
@@ -145,10 +141,6 @@ def main():
             angle = float(line[3])
             flip = False
             
-            # flip the set the images 50% of the time to compensate for overfitting of a predominantly left turning track
-            #if np.random.uniform() > 0.5:
-            #    flip = True
-                
             samples.append(DrivingData(name, angle, flip, directory))
             
             # also store left and right images with corrected steering angles
